@@ -3,14 +3,10 @@
 <head>
 <script>
 // Convenience prompt only; the page and data remain public.
-if (sessionStorage.getItem('mwh_copy_entry') !== 'yes') {
-  const candidate = prompt('Enter access code (convenience only; data is public):');
-  if (candidate !== '650119') {
-    document.open(); document.write('<!doctype html><title>Access denied</title><p>Incorrect code or canceled.</p>'); document.close();
-    throw new Error('Entry canceled');
-  }
-  sessionStorage.setItem('mwh_copy_entry', 'yes');
-}
+const mwhEntryAllowed = sessionStorage.getItem('mwh_copy_entry') === 'yes' ||
+  prompt('Enter access code (convenience only; data is public):') === '650119';
+if (mwhEntryAllowed) sessionStorage.setItem('mwh_copy_entry', 'yes');
+else location.replace('about:blank');
 </script>
 
     <meta charset="UTF-8">
